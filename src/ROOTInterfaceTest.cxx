@@ -16,6 +16,8 @@
 #include "ROOTProducer.h"
 #endif
 
+const char* defaultFileName= "c:/slac/EventData_288_75.dat";
+
 class  TSignals {
   RQ_OBJECT("TSignals")
 public:
@@ -188,7 +190,7 @@ void runSCTClass::onConfigure()
   std::cout << "runSCTClass::onConfigure()" << std::endl;
   const int sizeofDummy = 256;
   char dummy[sizeofDummy];
-  p->getConfiguration("infile", "c:/slac/EventData_288_75.dat", &dummy[0], sizeofDummy);
+  p->getConfiguration("infile", defaultFileName , &dummy[0], sizeofDummy);
   
   e->_readoutSpeed = p1->getConfiguration("readout", 1);
   std::cout << "readout: " << e->_readoutSpeed << std::endl;
@@ -265,12 +267,14 @@ bool SCTDummy::readLine()
       data[j] = true;
       data_char[j]=j; // to have not always the same number 
       data_ULong64[j]=j*1000;
+      data1[size-j]=true;
     }
     else
     {
       data[j] = false;
       data_char[j] =0;
       data_ULong64[j]=0;
+      data1[size-j]=false;
     }
     ++j;
   }
@@ -370,7 +374,7 @@ void ROOTInterfaceTest(const char* name){
 
   rSCT.readoutloop();
 
-
+gSystem->Exit(0);
 }
 
 
@@ -382,7 +386,7 @@ void ROOTInterfaceTest(){
 
   rSCT.readoutloop();
 
-
+gSystem->Exit(0);
 }
 
 #ifndef __CINT__
