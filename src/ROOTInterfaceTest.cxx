@@ -90,7 +90,7 @@ public:
   runSCTClass(const char* name);
 
 
-  void onStart();
+  void onStart(int);
   void onConfigure();
   void onStop();
   void OnTerminate();
@@ -177,10 +177,11 @@ runSCTClass::runSCTClass(const char* name)
   
 }
 
-void runSCTClass::onStart()
+void runSCTClass::onStart(int Run)
 {
-  std::cout << "<runSCTClass::onStart()" << std::endl;
+  std::cout << "<runSCTClass::onStart() "<<Run << std::endl;
   e->m_ev=0;
+  e->m_max = 1000000;
   m_status = started;
 }
 
@@ -354,7 +355,7 @@ void SCTDummy::readOutLoop()
 SCTDummy::SCTDummy()
 {
   m_ev = 0;
-  m_max = 10000;
+  m_max = 1000000;
   eSignals = new TSignals();
   data_ULong64 =new ULong64_t[size];
   for (int i = 0; i < size; ++i)
