@@ -147,7 +147,6 @@ runSCTClass::runSCTClass(const char* name)
   p->addDataPointer_bool(1, e->data1, e->size);
   p->addDataPointer_UChar_t(2, e->data_char, e->size);
   p->addDataPointer_ULong64_t(3, e->data_ULong64, e->size);
-
   p->setTimeOut(10000);
   p->Connect("send_onStart(int)", this->Class_Name(), this, "onStart(int)");
   p->Connect("send_onConfigure()", this->Class_Name(), this, "onConfigure()");
@@ -155,7 +154,7 @@ runSCTClass::runSCTClass(const char* name)
   p->Connect("send_OnTerminate()", this->Class_Name(), this, "OnTerminate()");
   e->eSignals->Connect("StartEvent(int)", p->Class_Name(), p, "createNewEvent(int)");
   e->eSignals->Connect("EndEvent(int)", p->Class_Name(), p, "sendEvent(int)");
-  
+  e->eSignals->Connect("EndOfBurst()",p->Class_Name(), p, "setStatusToStopped()");
   
 
 
@@ -167,11 +166,10 @@ runSCTClass::runSCTClass(const char* name)
  p1->Connect("send_onConfigure()", this->Class_Name(), this, "onConfigure()");
  p1->Connect("send_onStop()", this->Class_Name(), this, "onStop()");
  p1->Connect("send_OnTerminate()", this->Class_Name(), this, "OnTerminate()");
-  
  p1->setTimeOut(10000); 
  e->eSignals->Connect("StartEvent(int)",  p1->Class_Name(), p1, "createNewEvent(int)");
  e->eSignals->Connect("EndEvent(int)",  p1->Class_Name(), p1, "sendEvent(int)");
-  
+ e->eSignals->Connect("EndOfBurst()",p1->Class_Name(), p1, "setStatusToStopped()");
   
    p1->Connect("send_statusChanged()", p->Class_Name(), p, "checkStatus()");
    p->Connect("send_statusChanged()", p1->Class_Name(), p1, "checkStatus()");
@@ -212,6 +210,7 @@ void runSCTClass::onStop()
   std::cout << "runSCTClass::onStop()" << std::endl;
   e->m_ev =e->m_max+1;
   m_status = stopping;
+  
 }
 
 void runSCTClass::OnTerminate()
@@ -234,6 +233,7 @@ std::cout<< "ready to go" <<Std::endl;
      
        continue;
     }
+    
     gSystem->Sleep(1000);
     e->readOutLoop();
   }
