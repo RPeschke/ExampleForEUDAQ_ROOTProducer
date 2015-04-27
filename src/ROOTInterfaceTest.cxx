@@ -148,8 +148,8 @@ runSCTClass::runSCTClass(const char* name)
   p->addDataPointer_UChar_t(2, e->data_char, e->size);
   p->addDataPointer_ULong64_t(3, e->data_ULong64, e->size);
 
-  p->Connect("send_onStart()", this->Class_Name(), this, "onStart()");
   p->setTimeOut(10000);
+  p->Connect("send_onStart(int)", this->Class_Name(), this, "onStart(int)");
   p->Connect("send_onConfigure()", this->Class_Name(), this, "onConfigure()");
   p->Connect("send_onStop()", this->Class_Name(), this, "onStop()");
   p->Connect("send_OnTerminate()", this->Class_Name(), this, "OnTerminate()");
@@ -163,7 +163,7 @@ runSCTClass::runSCTClass(const char* name)
  p1->addDataPointer_UChar_t(1, e->data_char, e->size);
  p1->addDataPointer_ULong64_t(2, e->data_ULong64, e->size);
 
- p1->Connect("send_onStart()", this->Class_Name(), this, "onStart()");
+ p1->Connect("send_onStart(int)", this->Class_Name(), this, "onStart(int)");
  p1->Connect("send_onConfigure()", this->Class_Name(), this, "onConfigure()");
  p1->Connect("send_onStop()", this->Class_Name(), this, "onStop()");
  p1->Connect("send_OnTerminate()", this->Class_Name(), this, "OnTerminate()");
