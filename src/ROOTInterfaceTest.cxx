@@ -337,21 +337,23 @@ int SCTDummy::getTimestamp()
 
 void SCTDummy::readOutLoop()
 {
+  eSignals->StartOfBurst();
   while (hasData())
   {
     eSignals->StartEvent(m_ev);
 
-    eSignals->StartOfBurst();
+    
     
     
     readLine();
 
     
-    eSignals->EndOfBurst();
+   
     eSignals->EndEvent(m_ev);
     ++m_ev;
    //std::cout<< "send event "<< m_ev <<std::endl;
   }
+  eSignals->EndOfBurst();
 }
 
 SCTDummy::SCTDummy()
