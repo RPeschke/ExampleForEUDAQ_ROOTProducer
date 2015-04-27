@@ -175,6 +175,7 @@ runSCTClass::runSCTClass(const char* name)
    p->Connect("send_statusChanged()", p1->Class_Name(), p1, "checkStatus()");
   
   
+  std::cout<< "p: "<<p-> getProducerName() <<"    p1: "<<p1-> getProducerName() <<std::endl;
 }
 
 void runSCTClass::onStart(int Run)
