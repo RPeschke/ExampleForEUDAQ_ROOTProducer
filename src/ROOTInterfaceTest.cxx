@@ -208,7 +208,7 @@ void runSCTClass::onConfigure()
 void runSCTClass::onStop()
 {
   std::cout << "runSCTClass::onStop()" << std::endl;
-  e->m_ev =e->m_max+1;
+  e->m_max = e->m_ev+1000;
   m_status = stopping;
   
 }
